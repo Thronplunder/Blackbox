@@ -1,0 +1,24 @@
+NetAddr.langPort
+
+OSCdef(\position, {
+	|msg, time, addr, recvPort|
+	msg.postln;
+    x = msg[1];
+    y = msg[2];
+    z = msg[3];
+}, '/position')
+
+x.linlin(0, 1, 600, 0)
+
+w= Window.new("Finger Position", Rect(128, 64, 600, 400 ));
+w.front;
+w.drawFunc= {
+    var newX, newY;
+    Pen.fillColor = Color.blue;
+    newX = x.linlin(0, 1, 0, w.bounds.width);
+    newY = y.linlin(0, 1, w.bounds.height, 0);
+    Pen.moveTo(x@y);
+    Pen.fillOval(Rect(newX, newY, 10, 10));
+    Pen.perform(\fill);
+}
+{while {w.isClosed.not}{w.refresh; 0.04.wait;}}.fork(AppClock)
