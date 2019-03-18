@@ -15,8 +15,8 @@ SynthDef(\Reverb, {
 SynthDef(\granular, {
     |amp = 0.3, triggerFreq = 50, grainSize = 0.1, buffer, rate = 1, pos = 0, outBus = 0, pan=0|
     var snd;
-    snd = GrainBuf.ar(2, Impulse.kr(10), 0.1, buffer, LFNoise1.kr.range(0.5, 2),
-            LFNoise2.kr(0.1).range(0, 1), 2, pan, -1);
+    snd = GrainBuf.ar(1, Impulse.kr(10), grainSize, buffer, rate,
+            pos, 2, pan, -1);
     Out.ar(outBus, snd);
 }).add;
 
